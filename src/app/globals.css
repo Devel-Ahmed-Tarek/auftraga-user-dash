@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+:root {
+  --ak-navy: #182844;
+  --ak-navy-soft: #1a3153;
+  --ak-blue: #0084fc;
+  --ak-blue-dark: #0068c9;
+  --ak-blue-soft: #e8f3ff;
+  --ak-orange: #ff8a1a;
+  --ak-orange-soft: #fff3e6;
+  --ak-green: #22c55e;
+  --ak-green-soft: #e8f9ef;
+  --ak-bg: #f3f5f8;
+  --ak-card: #ffffff;
+  --ak-border: #e4e9f0;
+  --ak-text: #182844;
+  --ak-muted: #6b7a90;
+  --ak-danger: #ef4444;
+}
+
+@theme inline {
+  --color-background: var(--ak-bg);
+  --color-foreground: var(--ak-text);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(circle at top right, rgba(0, 132, 252, 0.08), transparent 34%),
+    radial-gradient(circle at top left, rgba(255, 138, 26, 0.07), transparent 28%),
+    var(--ak-bg);
+  color: var(--ak-text);
+  font-family: var(--font-geist-sans), "Segoe UI", sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
