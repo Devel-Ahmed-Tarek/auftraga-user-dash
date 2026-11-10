@@ -35,13 +35,17 @@ export function BrandHeader({ branding }: { branding: Branding }) {
   return (
     <header className="border-b border-[var(--ak-border)] bg-white/90 backdrop-blur">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-4 sm:px-6">
-        <Link href={`/${locale}`} className="flex min-w-0 items-center gap-3">
+        <Link
+          href={`/${locale}`}
+          className="flex min-w-0 items-center"
+          aria-label={siteName}
+        >
           {showLogo ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={logoUrl}
               alt={siteName}
-              className="h-10 w-auto max-w-[160px] object-contain"
+              className="h-10 w-auto max-w-[180px] object-contain"
               onError={() => setLogoFailed(true)}
             />
           ) : (
@@ -58,12 +62,6 @@ export function BrandHeader({ branding }: { branding: Branding }) {
               </span>
             </div>
           )}
-          <div className="min-w-0">
-            <p className="truncate text-sm font-semibold tracking-[0.08em] text-[var(--ak-navy)] uppercase">
-              {siteName}
-            </p>
-            <p className="text-xs text-[var(--ak-muted)]">{t.brandSubtitle}</p>
-          </div>
         </Link>
 
         <div className="flex shrink-0 items-center gap-3">
