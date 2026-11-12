@@ -4,6 +4,10 @@ import { useLanguage } from "@/i18n/LanguageProvider";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
+function looksLikeEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
 export default function HomePage() {
   const router = useRouter();
   const { locale, t } = useLanguage();
@@ -13,7 +17,8 @@ export default function HomePage() {
   function onSubmit(e: FormEvent) {
     e.preventDefault();
     const value = token.trim();
-    if (value.length < 16) {
+    const validEmail = looksLikeEmail(value);
+    if (!validEmail && value.length < 16) {
       setError(t.tokenError);
       return;
     }
@@ -43,6 +48,8 @@ export default function HomePage() {
               placeholder={t.tokenPlaceholder}
               className="w-full rounded-xl border border-[var(--ak-border)] px-3 py-3 outline-none focus:border-[var(--ak-blue)]"
               dir="ltr"
+              autoComplete="email"
+              inputMode="email"
             />
           </label>
           {error && <p className="text-sm text-red-600">{error}</p>}

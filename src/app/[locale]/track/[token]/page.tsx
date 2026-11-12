@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { TrackDashboard } from "@/components/TrackDashboard";
 import { getMessages } from "@/i18n/messages";
 import { normalizeLocale } from "@/i18n/locales";
@@ -9,13 +10,24 @@ export default async function TrackPage({
 }: {
   params: Promise<{ locale: string; token: string }>;
 }) {
-  const { locale: rawLocale, token } = await params;
+  const { locale: rawLocale, token: rawToken } = await params;
   const locale = normalizeLocale(rawLocale);
   const t = getMessages(locale);
+  const token = decodeURIComponent(rawToken);
 
   try {
     const data = await getTracking(token, locale);
-    return <TrackDashboard initial={data} token={token} />;
+
+    // Normalize email/legacy lookups onto the stable track_token URL.
+    if (
+      data.track_token &&
+      data.track_token !== token &&
+      (token.includes("@") || token.length < 32)
+    ) {
+      redirect(`/${locale}/track/${encodeURIComponent(data.track_token)}`);
+    }
+
+    return <TrackDashboard initial={data} token={data.track_token || token} />;
   } catch (e) {
     const message = e instanceof Error ? e.message : t.invalidLink;
     return (
