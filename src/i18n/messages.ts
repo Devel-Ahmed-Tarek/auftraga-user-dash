@@ -11,6 +11,9 @@ export type Messages = {
   tokenPlaceholder: string;
   openRequest: string;
   tokenError: string;
+  signingIn: string;
+  authRedirectError: string;
+  noOffersForAccount: string;
   trackTitle: string;
   requestNumber: string;
   confirmed: string;
@@ -93,6 +96,9 @@ export const messages: Record<Locale, Messages> = {
     tokenPlaceholder: "name@email.com oder Token",
     openRequest: "Anfrage öffnen",
     tokenError: "Bitte geben Sie Ihre E-Mail-Adresse oder einen gültigen Tracking-Token ein.",
+    signingIn: "Anmeldung wird vorbereitet…",
+    authRedirectError: "Anmeldung fehlgeschlagen. Bitte erneut über die Website anmelden.",
+    noOffersForAccount: "Kein Auftrag für dieses Konto gefunden.",
     trackTitle: "Verfolgen Sie Ihre Anfrage Schritt für Schritt",
     requestNumber: "Anfrage",
     confirmed: "Bestätigt",
@@ -175,6 +181,9 @@ export const messages: Record<Locale, Messages> = {
     tokenPlaceholder: "name@email.com or token",
     openRequest: "Open request",
     tokenError: "Please enter your email address or a valid tracking token.",
+    signingIn: "Signing you in…",
+    authRedirectError: "Sign-in failed. Please log in again from the website.",
+    noOffersForAccount: "No request found for this account.",
     trackTitle: "Follow your request step by step",
     requestNumber: "Request",
     confirmed: "Confirmed",
@@ -256,6 +265,9 @@ export const messages: Record<Locale, Messages> = {
     tokenPlaceholder: "name@email.com أو الرمز",
     openRequest: "فتح الطلب",
     tokenError: "من فضلك أدخل بريدك الإلكتروني أو رمز تتبع صالح.",
+    signingIn: "جاري تسجيل الدخول…",
+    authRedirectError: "فشل تسجيل الدخول. سجّل من الموقع مرة أخرى.",
+    noOffersForAccount: "لا يوجد طلب مرتبط بهذا الحساب.",
     trackTitle: "تابع طلبك خطوة بخطوة",
     requestNumber: "طلب",
     confirmed: "مؤكد",
@@ -337,6 +349,9 @@ export const messages: Record<Locale, Messages> = {
     tokenPlaceholder: "name@email.com ou jeton",
     openRequest: "Ouvrir la demande",
     tokenError: "Veuillez saisir votre e-mail ou un jeton de suivi valide.",
+    signingIn: "Connexion en cours…",
+    authRedirectError: "Échec de la connexion. Veuillez vous reconnecter via le site.",
+    noOffersForAccount: "Aucune demande trouvée pour ce compte.",
     trackTitle: "Suivez votre demande étape par étape",
     requestNumber: "Demande",
     confirmed: "Confirmée",
@@ -419,6 +434,9 @@ export const messages: Record<Locale, Messages> = {
     tokenPlaceholder: "name@email.com o token",
     openRequest: "Apri richiesta",
     tokenError: "Inserisci la tua e-mail o un token di tracciamento valido.",
+    signingIn: "Accesso in corso…",
+    authRedirectError: "Accesso non riuscito. Accedi di nuovo dal sito.",
+    noOffersForAccount: "Nessuna richiesta trovata per questo account.",
     trackTitle: "Segui la tua richiesta passo dopo passo",
     requestNumber: "Richiesta",
     confirmed: "Confermata",

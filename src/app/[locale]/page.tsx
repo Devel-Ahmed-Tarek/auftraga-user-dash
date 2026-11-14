@@ -1,18 +1,62 @@
 "use client";
 
 import { useLanguage } from "@/i18n/LanguageProvider";
-import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { getMyOffers, setStoredAuthToken } from "@/lib/api";
+import { useRouter, useSearchParams } from "next/navigation";
+import { FormEvent, Suspense, useEffect, useState } from "react";
 
 function looksLikeEmail(value: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
-export default function HomePage() {
+function HomePageInner() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { locale, t } = useLanguage();
   const [token, setToken] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [booting, setBooting] = useState(true);
+
+  useEffect(() => {
+    const authToken = searchParams.get("token")?.trim();
+    if (!authToken) {
+      setBooting(false);
+      return;
+    }
+
+    let cancelled = false;
+
+    (async () => {
+      try {
+        setStoredAuthToken(authToken);
+        const data = await getMyOffers(authToken, locale);
+        if (cancelled) return;
+
+        // Clean token from URL
+        router.replace(`/${locale}`);
+
+        if (data.latest_track_token) {
+          router.replace(
+            `/${locale}/track/${encodeURIComponent(data.latest_track_token)}`
+          );
+          return;
+        }
+
+        setError(t.noOffersForAccount);
+      } catch {
+        if (!cancelled) {
+          setStoredAuthToken(null);
+          setError(t.authRedirectError);
+        }
+      } finally {
+        if (!cancelled) setBooting(false);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [searchParams, locale, router, t.authRedirectError, t.noOffersForAccount]);
 
   function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -24,6 +68,14 @@ export default function HomePage() {
     }
     setError(null);
     router.push(`/${locale}/track/${encodeURIComponent(value)}`);
+  }
+
+  if (booting && searchParams.get("token")) {
+    return (
+      <div className="mx-auto max-w-xl rounded-3xl border border-[var(--ak-border)] bg-white p-8 text-center shadow-sm">
+        <p className="text-sm text-[var(--ak-muted)]">{t.signingIn}</p>
+      </div>
+    );
   }
 
   return (
@@ -62,5 +114,19 @@ export default function HomePage() {
         </form>
       </section>
     </div>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="mx-auto max-w-xl rounded-3xl border border-[var(--ak-border)] bg-white p-8 text-center shadow-sm">
+          <p className="text-sm text-[var(--ak-muted)]">…</p>
+        </div>
+      }
+    >
+      <HomePageInner />
+    </Suspense>
   );
 }

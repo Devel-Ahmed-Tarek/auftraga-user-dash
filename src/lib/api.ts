@@ -54,13 +54,32 @@ type ApiEnvelope<T> = {
   errors?: unknown;
 };
 
+const AUTH_STORAGE_KEY = "ak_customer_auth_token";
+
+export function getStoredAuthToken(): string | null {
+  if (typeof window === "undefined") return null;
+  return window.localStorage.getItem(AUTH_STORAGE_KEY);
+}
+
+export function setStoredAuthToken(token: string | null) {
+  if (typeof window === "undefined") return;
+  if (!token) {
+    window.localStorage.removeItem(AUTH_STORAGE_KEY);
+    return;
+  }
+  window.localStorage.setItem(AUTH_STORAGE_KEY, token);
+}
+
 async function request<T>(
   path: string,
   init?: RequestInit,
-  lang?: string
+  lang?: string,
+  authToken?: string | null
 ): Promise<T> {
   const url = new URL(`${API_BASE}${path}`);
   if (lang) url.searchParams.set("lang", lang);
+
+  const bearer = authToken === undefined ? getStoredAuthToken() : authToken;
 
   const res = await fetch(url.toString(), {
     ...init,
@@ -68,6 +87,7 @@ async function request<T>(
       Accept: "application/json",
       "Content-Type": "application/json",
       ...(lang ? { "Accept-Language": lang } : {}),
+      ...(bearer ? { Authorization: `Bearer ${bearer}` } : {}),
       ...(init?.headers || {}),
     },
     cache: "no-store",
@@ -116,6 +136,33 @@ export async function getBranding(): Promise<Branding> {
       logo_dark: null,
     };
   }
+}
+
+export type MyOfferRow = {
+  id: number;
+  name: string | null;
+  email: string | null;
+  service: string | null;
+  confirm_status: string | null;
+  created_at: string | null;
+  track_token: string;
+  track_url: string;
+};
+
+export type MyOffersPayload = {
+  offers: MyOfferRow[];
+  latest_track_url: string | null;
+  latest_track_token: string | null;
+  total: number;
+};
+
+export function getMyOffers(authToken: string, lang?: string) {
+  return request<MyOffersPayload>(
+    "/user/auth/my-offers",
+    undefined,
+    lang,
+    authToken
+  );
 }
 
 export function getTracking(token: string, lang?: string) {
