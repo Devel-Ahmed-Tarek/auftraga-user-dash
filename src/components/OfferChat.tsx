@@ -197,6 +197,12 @@ export function OfferChat({
             ) : (
               messages.map((msg) => {
                 const mine = msg.sender_type === "customer";
+                const isAdmin = msg.sender_type === "admin";
+                const label = mine
+                  ? t.chatYou
+                  : isAdmin
+                    ? t.chatAdmin
+                    : t.chatCompany;
                 return (
                   <div
                     key={msg.id}
@@ -206,12 +212,12 @@ export function OfferChat({
                       className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm ${
                         mine
                           ? "bg-[var(--ak-blue)] text-white"
-                          : "bg-[var(--ak-bg)] text-[var(--ak-navy)]"
+                          : isAdmin
+                            ? "bg-[var(--ak-navy)] text-white"
+                            : "bg-[var(--ak-bg)] text-[var(--ak-navy)]"
                       }`}
                     >
-                      <p className="mb-1 text-[10px] opacity-70">
-                        {mine ? t.chatYou : t.chatCompany}
-                      </p>
+                      <p className="mb-1 text-[10px] opacity-70">{label}</p>
                       <p className="whitespace-pre-wrap break-words">{msg.body}</p>
                     </div>
                   </div>

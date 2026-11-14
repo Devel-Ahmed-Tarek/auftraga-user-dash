@@ -68,6 +68,7 @@ export type Messages = {
   chatSend: string;
   chatYou: string;
   chatCompany: string;
+  chatAdmin: string;
   chatUnread: string;
   steps: {
     received: string;
@@ -151,6 +152,7 @@ export const messages: Record<Locale, Messages> = {
     chatSend: "Senden",
     chatYou: "Sie",
     chatCompany: "Unternehmen",
+    chatAdmin: "AuftragKompass",
     chatUnread: "neu",
     steps: {
       received: "Anfrage eingegangen",
@@ -231,6 +233,7 @@ export const messages: Record<Locale, Messages> = {
     chatSend: "Send",
     chatYou: "You",
     chatCompany: "Company",
+    chatAdmin: "AuftragKompass",
     chatUnread: "new",
     steps: {
       received: "Request received",
@@ -311,6 +314,7 @@ export const messages: Record<Locale, Messages> = {
     chatSend: "إرسال",
     chatYou: "أنت",
     chatCompany: "الشركة",
+    chatAdmin: "AuftragKompass",
     chatUnread: "جديد",
     steps: {
       received: "تم استلام الطلب",
@@ -392,6 +396,7 @@ export const messages: Record<Locale, Messages> = {
     chatSend: "Envoyer",
     chatYou: "Vous",
     chatCompany: "Entreprise",
+    chatAdmin: "AuftragKompass",
     chatUnread: "nouveau",
     steps: {
       received: "Demande reçue",
@@ -473,6 +478,7 @@ export const messages: Record<Locale, Messages> = {
     chatSend: "Invia",
     chatYou: "Tu",
     chatCompany: "Azienda",
+    chatAdmin: "AuftragKompass",
     chatUnread: "nuovo",
     steps: {
       received: "Richiesta ricevuta",
