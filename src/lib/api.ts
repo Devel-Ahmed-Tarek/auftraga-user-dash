@@ -108,7 +108,16 @@ async function request<T>(
       json.status === "success");
 
   if (!ok) {
-    throw new Error(json.msg || `Error ${res.status}`);
+    const data = (json.data || {}) as Record<string, unknown>;
+    const err = new Error(json.msg || `Error ${res.status}`) as Error & {
+      status?: number;
+      code?: string;
+      loginUrl?: string;
+    };
+    err.status = typeof json.status === "number" ? json.status : res.status;
+    if (typeof data.code === "string") err.code = data.code;
+    if (typeof data.login_url === "string") err.loginUrl = data.login_url;
+    throw err;
   }
 
   return json.data as T;

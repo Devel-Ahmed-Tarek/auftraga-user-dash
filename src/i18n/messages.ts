@@ -14,6 +14,9 @@ export type Messages = {
   signingIn: string;
   authRedirectError: string;
   noOffersForAccount: string;
+  loginRequiredTitle: string;
+  loginRequiredBody: string;
+  goToLogin: string;
   trackTitle: string;
   requestNumber: string;
   confirmed: string;
@@ -99,6 +102,10 @@ export const messages: Record<Locale, Messages> = {
     signingIn: "Anmeldung wird vorbereitet…",
     authRedirectError: "Anmeldung fehlgeschlagen. Bitte erneut über die Website anmelden.",
     noOffersForAccount: "Kein Auftrag für dieses Konto gefunden.",
+    loginRequiredTitle: "Anmeldung erforderlich",
+    loginRequiredBody:
+      "Für diese E-Mail existiert ein Kundenkonto. Bitte melden Sie sich an, um Ihre Anfrage zu verfolgen.",
+    goToLogin: "Zur Anmeldung",
     trackTitle: "Verfolgen Sie Ihre Anfrage Schritt für Schritt",
     requestNumber: "Anfrage",
     confirmed: "Bestätigt",
@@ -184,6 +191,10 @@ export const messages: Record<Locale, Messages> = {
     signingIn: "Signing you in…",
     authRedirectError: "Sign-in failed. Please log in again from the website.",
     noOffersForAccount: "No request found for this account.",
+    loginRequiredTitle: "Login required",
+    loginRequiredBody:
+      "This email has a customer account. Please sign in to track your request.",
+    goToLogin: "Go to login",
     trackTitle: "Follow your request step by step",
     requestNumber: "Request",
     confirmed: "Confirmed",
@@ -268,6 +279,10 @@ export const messages: Record<Locale, Messages> = {
     signingIn: "جاري تسجيل الدخول…",
     authRedirectError: "فشل تسجيل الدخول. سجّل من الموقع مرة أخرى.",
     noOffersForAccount: "لا يوجد طلب مرتبط بهذا الحساب.",
+    loginRequiredTitle: "تسجيل الدخول مطلوب",
+    loginRequiredBody:
+      "هذا البريد مرتبط بحساب عميل. سجّل الدخول لمتابعة طلبك.",
+    goToLogin: "الذهاب لتسجيل الدخول",
     trackTitle: "تابع طلبك خطوة بخطوة",
     requestNumber: "طلب",
     confirmed: "مؤكد",
@@ -352,6 +367,10 @@ export const messages: Record<Locale, Messages> = {
     signingIn: "Connexion en cours…",
     authRedirectError: "Échec de la connexion. Veuillez vous reconnecter via le site.",
     noOffersForAccount: "Aucune demande trouvée pour ce compte.",
+    loginRequiredTitle: "Connexion requise",
+    loginRequiredBody:
+      "Cette adresse e-mail a un compte client. Veuillez vous connecter pour suivre votre demande.",
+    goToLogin: "Se connecter",
     trackTitle: "Suivez votre demande étape par étape",
     requestNumber: "Demande",
     confirmed: "Confirmée",
@@ -437,6 +456,10 @@ export const messages: Record<Locale, Messages> = {
     signingIn: "Accesso in corso…",
     authRedirectError: "Accesso non riuscito. Accedi di nuovo dal sito.",
     noOffersForAccount: "Nessuna richiesta trovata per questo account.",
+    loginRequiredTitle: "Accesso richiesto",
+    loginRequiredBody:
+      "Questa e-mail ha un account cliente. Accedi per seguire la richiesta.",
+    goToLogin: "Vai al login",
     trackTitle: "Segui la tua richiesta passo dopo passo",
     requestNumber: "Richiesta",
     confirmed: "Confermata",

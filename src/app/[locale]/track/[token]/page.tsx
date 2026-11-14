@@ -29,17 +29,35 @@ export default async function TrackPage({
 
     return <TrackDashboard initial={data} token={data.track_token || token} />;
   } catch (e) {
-    const message = e instanceof Error ? e.message : t.invalidLink;
+    const err = e as Error & { code?: string; loginUrl?: string };
+    const needsLogin = err.code === "login_required";
+    const message = err.message || t.invalidLink;
+    const loginUrl = err.loginUrl || `https://auftragkompass.de/${locale}/login`;
+
     return (
       <div className="mx-auto max-w-lg rounded-3xl border border-red-200 bg-white p-8 text-center shadow-sm">
-        <h1 className="text-2xl font-bold text-[var(--ak-navy)]">{t.invalidLink}</h1>
-        <p className="mt-3 text-sm text-[var(--ak-muted)]">{message}</p>
-        <Link
-          href={`/${locale}`}
-          className="mt-6 inline-flex rounded-full bg-[var(--ak-blue)] px-5 py-2.5 text-sm font-semibold text-white"
-        >
-          {t.backHome}
-        </Link>
+        <h1 className="text-2xl font-bold text-[var(--ak-navy)]">
+          {needsLogin ? t.loginRequiredTitle : t.invalidLink}
+        </h1>
+        <p className="mt-3 text-sm text-[var(--ak-muted)]">
+          {needsLogin ? t.loginRequiredBody : message}
+        </p>
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+          {needsLogin && (
+            <a
+              href={loginUrl}
+              className="inline-flex rounded-full bg-[var(--ak-blue)] px-5 py-2.5 text-sm font-semibold text-white"
+            >
+              {t.goToLogin}
+            </a>
+          )}
+          <Link
+            href={`/${locale}`}
+            className="inline-flex rounded-full border border-[var(--ak-border)] px-5 py-2.5 text-sm font-semibold text-[var(--ak-navy)]"
+          >
+            {t.backHome}
+          </Link>
+        </div>
       </div>
     );
   }
