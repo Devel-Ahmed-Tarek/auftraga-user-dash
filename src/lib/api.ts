@@ -181,7 +181,7 @@ export function sendAnnouncement(token: string, comment: string, lang?: string) 
 
 export type ChatMessage = {
   id: number;
-  sender_type: "customer" | "company";
+  sender_type: "customer" | "company" | "admin";
   sender_id: number | null;
   body: string;
   read_at: string | null;
